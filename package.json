@@ -1,0 +1,18 @@
+{
+  "name": "@jiegou/evidence-verifier",
+  "version": "0.1.0",
+  "description": "Independent verifier for JieGou audit-evidence exports. Recomputes the tamper-evident hash chain and checks it against external WORM anchors, per the published Evidence Schema — with zero JieGou dependencies, so the verifier itself is inspectable.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "bin": { "evidence-verifier": "./src/cli.ts" },
+  "main": "./src/index.ts",
+  "scripts": {
+    "test": "tsx --test test/*.test.ts"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tsx": "^4.22.4",
+    "typescript": "^5.6.0",
+    "@types/node": "^25.9.3"
+  }
+}
