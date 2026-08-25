@@ -29,8 +29,8 @@ the two drift.
 | `id` | Unique event id |
 | `accountId` | The account whose chain this event belongs to |
 | `actorId` / `actorEmail` | The identity that performed the action |
-| `action` | One of the 540 registered action names (§4) |
-| `resourceType` / `resourceId` / `resourceName` | What was acted on — one of 149 registered resource types (§5) |
+| `action` | One of the 559 registered action names (§4) |
+| `resourceType` / `resourceId` / `resourceName` | What was acted on — one of 158 registered resource types (§5) |
 | `before` / `after` | Resource state before/after, when captured |
 | `metadata` | Action-specific context |
 | `agentContext` | Present when the action was initiated by an AI agent: which agent identity |
@@ -68,9 +68,9 @@ operator's own shorthand: the records are strong on **faithful** (what happened 
 intact), practice-grade on **authorized** (approvals are recorded but interpretation still involves
 the operator), and not yet evidencing **complete** (nothing shows what never happened).
 
-## 4. Action vocabulary (540 actions, grouped by prefix)
+## 4. Action vocabulary (559 actions, grouped by prefix)
 
-- **`account.*`** (32): `account.approval_gate_email_changed` · `account.brand_voice_deleted` · `account.brand_voice_updated` · `account.budget_ceiling_breached` · `account.budget_override_set` · `account.budget_paused` · `account.budget_resumed` · `account.ceiling_breached` · `account.data_exported` · `account.default_locale_changed` · `account.deleted` · `account.deletion_cancelled` · `account.deletion_confirmed` · `account.deletion_executed` · `account.deletion_requested` · `account.department_brand_voice_deleted` · `account.department_brand_voice_updated` · `account.domain_config_deleted` · `account.domain_config_updated` · `account.mfa_required_disabled` · `account.mfa_required_enabled` · `account.migrated_to_portal` · `account.model_config_changed` · `account.plan_changed` · `account.renamed` · `account.saml_config_deleted` · `account.saml_config_updated` · `account.security_preset_applied` · `account.sharing_settings_updated` · `account.sso_connection_tested` · `account.user_auto_joined` · `account.vertical_changed`
+- **`account.*`** (33): `account.approval_gate_email_changed` · `account.brand_voice_deleted` · `account.brand_voice_updated` · `account.budget_ceiling_breached` · `account.budget_override_set` · `account.budget_paused` · `account.budget_resumed` · `account.cascade_cleanup` · `account.ceiling_breached` · `account.data_exported` · `account.default_locale_changed` · `account.deleted` · `account.deletion_cancelled` · `account.deletion_confirmed` · `account.deletion_executed` · `account.deletion_requested` · `account.department_brand_voice_deleted` · `account.department_brand_voice_updated` · `account.domain_config_deleted` · `account.domain_config_updated` · `account.mfa_required_disabled` · `account.mfa_required_enabled` · `account.migrated_to_portal` · `account.model_config_changed` · `account.plan_changed` · `account.renamed` · `account.saml_config_deleted` · `account.saml_config_updated` · `account.security_preset_applied` · `account.sharing_settings_updated` · `account.sso_connection_tested` · `account.user_auto_joined` · `account.vertical_changed`
 - **`account_gate.*`** (4): `account_gate.disabled` · `account_gate.fired` · `account_gate.registered` · `account_gate.updated`
 - **`accounting_tax.*`** (6): `accounting_tax.kb_article_deleted` · `accounting_tax.kb_article_updated` · `accounting_tax.kb_articles_seeded` · `accounting_tax.onboarding_completed` · `accounting_tax.onboarding_step_completed` · `accounting_tax.shadow_interaction_reviewed`
 - **`accounting_tax_portal.*`** (2): `accounting_tax_portal.config_updated` · `accounting_tax_portal.document_submitted`
@@ -78,7 +78,7 @@ the operator), and not yet evidencing **complete** (nothing shows what never hap
 - **`agent_registry.*`** (5): `agent_registry.deprecated` · `agent_registry.published` · `agent_registry.retired` · `agent_registry.unpublished` · `agent_registry.updated`
 - **`agent_workflow.*`** (5): `agent_workflow.approval_requested` · `agent_workflow.completed` · `agent_workflow.started` · `agent_workflow.step_executed` · `agent_workflow.step_rejected`
 - **`agent_workspace.*`** (3): `agent_workspace.created` · `agent_workspace.deleted` · `agent_workspace.updated`
-- **`appointment.*`** (4): `appointment.cancelled` · `appointment.created` · `appointment.modified` · `appointment.rescheduled`
+- **`appointment.*`** (6): `appointment.cancelled` · `appointment.created` · `appointment.marked_no_show` · `appointment.modified` · `appointment.reminder_sent` · `appointment.rescheduled`
 - **`approval.*`** (7): `approval.approved` · `approval.auto_approved` · `approval.escalated` · `approval.reassigned` · `approval.rejected` · `approval.reminded` · `approval.requested`
 - **`audit.*`** (1): `audit.exported`
 - **`audit_chain.*`** (2): `audit_chain.break_acknowledged` · `audit_chain.resigned`
@@ -88,6 +88,7 @@ the operator), and not yet evidencing **complete** (nothing shows what never hap
 - **`bakeoff_comment.*`** (2): `bakeoff_comment.created` · `bakeoff_comment.deleted`
 - **`bakeoff_template.*`** (3): `bakeoff_template.created` · `bakeoff_template.deleted` · `bakeoff_template.updated`
 - **`batch_run.*`** (3): `batch_run.cancelled` · `batch_run.created` · `batch_run.exported`
+- **`billing.*`** (2): `billing.discount_expiry_notified` · `billing.meters_flushed`
 - **`break_glass.*`** (5): `break_glass.expired` · `break_glass.granted` · `break_glass.renewed` · `break_glass.revoked` · `break_glass.used`
 - **`bulk_invite.*`** (1): `bulk_invite.completed`
 - **`bundle.*`** (4): `bundle.created` · `bundle.deleted` · `bundle.forked` · `bundle.updated`
@@ -139,14 +140,19 @@ the operator), and not yet evidencing **complete** (nothing shows what never hap
 - **`hipaa.*`** (2): `hipaa.baa_signed` · `hipaa.breach_detected`
 - **`home_services.*`** (8): `home_services.kb_articles_seeded` · `home_services.kb_csv_imported` · `home_services.kb_jobber_imported` · `home_services.onboarding_completed` · `home_services.onboarding_step_completed` · `home_services.shadow_interaction_reviewed` · `home_services.sla_escalation_rules_updated` · `home_services.sla_tiers_updated`
 - **`hook.*`** (5): `hook.created` · `hook.deleted` · `hook.execution_blocked` · `hook.fired` · `hook.updated`
-- **`hybrid_agent.*`** (8): `hybrid_agent.connector_call` · `hybrid_agent.context_query` · `hybrid_agent.deleted` · `hybrid_agent.enrollment_minted` · `hybrid_agent.registered` · `hybrid_agent.revoked` · `hybrid_agent.token_rotated` · `hybrid_agent.updated`
+- **`hybrid_agent.*`** (9): `hybrid_agent.asset_uploaded` · `hybrid_agent.connector_call` · `hybrid_agent.context_query` · `hybrid_agent.deleted` · `hybrid_agent.enrollment_minted` · `hybrid_agent.registered` · `hybrid_agent.revoked` · `hybrid_agent.token_rotated` · `hybrid_agent.updated`
+- **`inbound_event.*`** (1): `inbound_event.dispatched`
+- **`insights.*`** (1): `insights.digest_sent`
 - **`insurance_agency.*`** (4): `insurance_agency.kb_articles_seeded` · `insurance_agency.onboarding_completed` · `insurance_agency.onboarding_step_completed` · `insurance_agency.shadow_interaction_reviewed`
+- **`intake.*`** (1): `intake.submitted`
+- **`integration.*`** (1): `integration.deauthorized`
 - **`invite.*`** (3): `invite.accepted` · `invite.cancelled` · `invite.created`
 - **`invite_link.*`** (3): `invite_link.accepted` · `invite_link.created` · `invite_link.deleted`
 - **`kb.*`** (4): `kb.article_generated` · `kb.article_published` · `kb.article_rejected` · `kb.article_updated`
 - **`knowledge_base.*`** (4): `knowledge_base.created` · `knowledge_base.deleted` · `knowledge_base.owner_changed` · `knowledge_base.updated`
 - **`knowledge_source.*`** (5): `knowledge_source.connected` · `knowledge_source.disconnected` · `knowledge_source.health_checked` · `knowledge_source.queried` · `knowledge_source.updated`
 - **`leak_audit.*`** (2): `leak_audit.created` · `leak_audit.delivered`
+- **`learning_report.*`** (1): `learning_report.sent`
 - **`location_registry.*`** (1): `location_registry.updated`
 - **`managed_agent.*`** (1): `managed_agent.auto_provisioned`
 - **`managed_agent_config.*`** (1): `managed_agent_config.updated`
@@ -179,6 +185,8 @@ the operator), and not yet evidencing **complete** (nothing shows what never hap
 - **`review.*`** (3): `review.completed` · `review.requested` · `review.submitted`
 - **`review_sample.*`** (2): `review_sample.reviewed` · `review_sample.selected`
 - **`run.*`** (3): `run.deleted` · `run.deletion_blocked` · `run.shared`
+- **`s identity for webhook paths.*`** (1): `s identity for webhook paths.
+  // (No semicolons in union-body comments — extractUnion`
 - **`schedule.*`** (3): `schedule.created` · `schedule.deleted` · `schedule.updated`
 - **`screen_share.*`** (5): `screen_share.participant_invited` · `screen_share.recording_started` · `screen_share.recording_stopped` · `screen_share.room_created` · `screen_share.room_ended`
 - **`sdk.*`** (4): `sdk.coding_agent_executed` · `sdk.message_sent` · `sdk.recipe_executed` · `sdk.workflow_executed`
@@ -189,13 +197,16 @@ the operator), and not yet evidencing **complete** (nothing shows what never hap
 - **`supervisor_license.*`** (2): `supervisor_license.confirmed` · `supervisor_license.nominated`
 - **`support_grant.*`** (5): `support_grant.accessed` · `support_grant.created` · `support_grant.denied` · `support_grant.requested` · `support_grant.revoked`
 - **`survey.*`** (1): `survey.submitted`
+- **`system.*`** (1): `system`
 - **`time_entry.*`** (3): `time_entry.approved` · `time_entry.created` · `time_entry.exported`
 - **`tool_approval.*`** (4): `tool_approval.approved` · `tool_approval.denied` · `tool_approval.expired` · `tool_approval.requested`
+- **`trial.*`** (4): `trial.created` · `trial.expired` · `trial.nurture_email_sent` · `trial.reminder_sent`
 - **`trigger.*`** (3): `trigger.created` · `trigger.deleted` · `trigger.updated`
 - **`trust.*`** (3): `trust.deescalation_applied` · `trust.escalation_applied` · `trust.escalation_recommended`
 - **`user.*`** (6): `user.department_changed` · `user.logged_out` · `user.mfa_enrolled` · `user.removed` · `user.role_changed` · `user.update_department_roles`
 - **`veterinary.*`** (6): `veterinary.kb_article_deleted` · `veterinary.kb_article_updated` · `veterinary.kb_articles_seeded` · `veterinary.onboarding_completed` · `veterinary.onboarding_step_completed` · `veterinary.shadow_interaction_reviewed`
 - **`veterinary_portal.*`** (2): `veterinary_portal.config_updated` · `veterinary_portal.refill_requested`
+- **`video_job.*`** (2): `video_job.completed` · `video_job.failed`
 - **`website_crawl.*`** (5): `website_crawl.completed` · `website_crawl.created` · `website_crawl.failed` · `website_crawl.refresh_completed` · `website_crawl.refresh_failed`
 - **`work_receipt.*`** (1): `work_receipt.issued`
 - **`workflow.*`** (11): `workflow.created` · `workflow.deleted` · `workflow.execute` · `workflow.fork` · `workflow.imported_from_n8n` · `workflow.rollout_promoted` · `workflow.rollout_rolled_back` · `workflow.rollout_started` · `workflow.updated` · `workflow.version_created` · `workflow.version_rolled_back`
@@ -203,9 +214,9 @@ the operator), and not yet evidencing **complete** (nothing shows what never hap
 - **`workflow_run.*`** (5): `workflow_run.delegated` · `workflow_run.deleted` · `workflow_run.deletion_blocked` · `workflow_run.follow_up` · `workflow_run.shared`
 - **`zendesk.*`** (5): `zendesk.action_approved` · `zendesk.action_blocked` · `zendesk.action_executed` · `zendesk.action_held` · `zendesk.action_rejected`
 
-## 5. Resource types (149)
+## 5. Resource types (158)
 
-`account` · `accounting_tax_document` · `accounting_tax_kb_article` · `accounting_tax_onboarding` · `accounting_tax_portal_config` · `accounting_tax_shadow_interaction` · `agent_identity` · `agent_registry_entry` · `agent_workflow` · `agent_workspace` · `appointment` · `audit_archive` · `autonomy_context` · `bakeoff` · `bakeoff_comment` · `bakeoff_template` · `batch_run` · `bundle` · `channel_task` · `chat_agent` · `client_portal_config` · `cockpit_item` · `coding_agent_execution` · `collection` · `comment` · `community_submission` · `compliance` · `concierge_approval` · `consent` · `context_filter` · `conversation_branch` · `custom_step_definition` · `custom_tool` · `data_connector` · `data_residency_config` · `data_residency_violation` · `deadline` · `deletion_request` · `demo_video_job` · `dental_onboarding` · `dental_shadow_interaction` · `department_memory` · `dispatch_rule` · `document` · `embedded_api_key` · `embedded_run` · `engagement` · `entity_memory` · `environment_config` · `eu_ai_act_assessment` · `event_trigger` · `feedback` · `glossary_term` · `governance_assessment` · `governed_memory` · `group` · `gtm_artifact` · `gtm_config` · `gtm_content_hooks` · `gtm_digest` · `gtm_li_posts` · `gtm_policy` · `gtm_reply_candidates` · `gtm_run` · `hipaa_event` · `home_services_onboarding` · `home_services_shadow_interaction` · `home_services_sla` · `hook` · `hybrid_agent` · `insurance_agency_onboarding` · `insurance_agency_shadow_interaction` · `invite` · `invite_link` · `kb_auto_article` · `knowledge_base` · `knowledge_source_instance` · `leak_audit_run` · `location_registry` · `managed_agent` · `managed_agent_config` · `matter` · `mcp_bundle` · `mcp_instance` · `mcp_tunnel` · `message_template` · `messaging_reply` · `model_certification` · `msp_client` · `msp_client_tenant` · `msp_control_tower` · `msp_kb_article` · `msp_onboarding` · `msp_shadow_interaction` · `open_dental_config` · `partner_referral` · `pii_scan` · `pipeline` · `pipeline_run` · `playbook` · `policy_rule` · `portal_report` · `portal_service` · `portfolio` · `powershell_job` · `promotion_request` · `prompt_fragment` · `psa_agreement` · `psa_config` · `psa_configuration` · `psa_ticket` · `psa_time_entry` · `quality_guard` · `recall_campaign` · `recipe` · `recipe_review` · `retention_policy` · `run` · `schedule` · `screen_share_recording` · `screen_share_room` · `sdk_execution` · `self_service_request` · `sensitivity_filter` · `skill` · `sla_escalation` · `sla_escalation_rule` · `sla_tier` · `supervisor_license` · `support_grant` · `survey` · `time_entry` · `tool_approval` · `trigger` · `trust_profile` · `user` · `veterinary_kb_article` · `veterinary_onboarding` · `veterinary_portal_config` · `veterinary_refill_request` · `veterinary_shadow_interaction` · `virtual_file` · `website_crawl` · `workflow` · `workflow_deployment` · `workflow_memory` · `workflow_review` · `workflow_run` · `zendesk_ticket`
+`account` · `accounting_tax_document` · `accounting_tax_kb_article` · `accounting_tax_onboarding` · `accounting_tax_portal_config` · `accounting_tax_shadow_interaction` · `agent_identity` · `agent_registry_entry` · `agent_workflow` · `agent_workspace` · `appointment` · `appointment` · `audit_archive` · `autonomy_context` · `bakeoff` · `bakeoff_comment` · `bakeoff_template` · `batch_run` · `billing_meter` · `bundle` · `channel_task` · `chat_agent` · `client_portal_config` · `cockpit_item` · `coding_agent_execution` · `collection` · `comment` · `community_submission` · `compliance` · `concierge_approval` · `consent` · `context_filter` · `conversation_branch` · `custom_step_definition` · `custom_tool` · `data_connector` · `data_residency_config` · `data_residency_violation` · `deadline` · `deletion_request` · `demo_video_job` · `dental_onboarding` · `dental_shadow_interaction` · `department_memory` · `dispatch_rule` · `document` · `embedded_api_key` · `embedded_run` · `engagement` · `entity_memory` · `environment_config` · `eu_ai_act_assessment` · `event_trigger` · `feedback` · `glossary_term` · `governance_assessment` · `governed_memory` · `group` · `gtm_artifact` · `gtm_config` · `gtm_content_hooks` · `gtm_digest` · `gtm_li_posts` · `gtm_policy` · `gtm_reply_candidates` · `gtm_run` · `hipaa_event` · `home_services_onboarding` · `home_services_shadow_interaction` · `home_services_sla` · `hook` · `hybrid_agent` · `inbound_event` · `insights_digest` · `insurance_agency_onboarding` · `insurance_agency_shadow_interaction` · `intake_form` · `integration` · `invite` · `invite_link` · `kb_auto_article` · `knowledge_base` · `knowledge_source_instance` · `leak_audit_run` · `learning_report` · `location_registry` · `managed_agent` · `managed_agent_config` · `matter` · `mcp_bundle` · `mcp_instance` · `mcp_tunnel` · `message_template` · `messaging_reply` · `model_certification` · `msp_client` · `msp_client_tenant` · `msp_control_tower` · `msp_kb_article` · `msp_onboarding` · `msp_shadow_interaction` · `open_dental_config` · `partner_referral` · `pii_scan` · `pipeline` · `pipeline_run` · `playbook` · `policy_rule` · `portal_report` · `portal_service` · `portfolio` · `powershell_job` · `promotion_request` · `prompt_fragment` · `psa_agreement` · `psa_config` · `psa_configuration` · `psa_ticket` · `psa_time_entry` · `quality_guard` · `recall_campaign` · `recipe` · `recipe_review` · `retention_policy` · `run` · `schedule` · `screen_share_recording` · `screen_share_room` · `sdk_execution` · `self_service_request` · `sensitivity_filter` · `skill` · `sla_escalation` · `sla_escalation_rule` · `sla_tier` · `supervisor_license` · `support_grant` · `survey` · `time_entry` · `tool_approval` · `trial` · `trigger` · `trust_profile` · `user` · `veterinary_kb_article` · `veterinary_onboarding` · `veterinary_portal_config` · `veterinary_refill_request` · `veterinary_shadow_interaction` · `video_job` · `virtual_file` · `website_crawl` · `workflow` · `workflow_deployment` · `workflow_memory` · `workflow_review` · `workflow_run` · `zendesk_ticket`
 
 ## 6. Canonical forms — the byte-level contract
 
