@@ -1,0 +1,23 @@
+name: Auto-approve owner PRs
+
+# Auto-approves PRs authored by `shyan-ai` (the founder) — satisfies the
+# SOC 2 branch-protection 1-approval requirement on `main` without slowing
+# solo-founder velocity. Mirrors JieGouAI/orion's auto-approve.yml (minus
+# the renovate branch — this repo has no Renovate).
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  auto-approve:
+    runs-on: ubuntu-latest
+    if: github.actor == 'shyan-ai'
+    steps:
+      - name: Approve PR
+        uses: hmarr/auto-approve-action@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
