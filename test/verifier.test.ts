@@ -95,6 +95,38 @@ test('anchor agreement and disagreement', () => {
   assert.equal(good.matches, true);
   const bad = checkAnchor(r, { heads: { 'acct-1': { seq: 5, headHash: 'f'.repeat(64) } } }, 'acct-1');
   assert.equal(bad.matches, false);
+  // CORRECTED 2026-09-03. This used to assert `undefined` -- an export that cannot reach
+  // its own anchor was reported as inconclusive, with a suggestion to export more. That is
+  // the exact shape a drop-one-and-re-seal produces, so the tool was offering advice to the
+  // one party guaranteed not to take it. Unreachable anchor is now a FAILURE.
   const range = checkAnchor(r, { heads: { 'acct-1': { seq: 9, headHash: 'a'.repeat(64) } } }, 'acct-1');
-  assert.equal(range.matches, undefined);
+  assert.equal(range.matches, false);
+  assert.match(range.detail, /NOT anchor-verified/);
+});
+
+// ── Reported from outside, 2026-09-03, by a reader who ran the tool rather than reading it.
+// Both cases below failed before that report: the first accused an honest chain, the second
+// waved a forged one through.
+test('an anchor written MID-CHAIN verifies against a longer honest export', () => {
+  const chain = seal(raw);
+  const r = verifyChain(chain);
+  const headAt3 = r.headBySeq.get(3);
+  const mid = checkAnchor(r, { heads: { 'acct-1': { seq: 3, headHash: headAt3 } } }, 'acct-1');
+  // Was: matches === false ("DIFFERS"), because the anchored head was compared against the
+  // FINAL recomputed head. A false accusation against an honest operator, and the reason
+  // schema section 3's "an earlier anchor pins the history before it" had no mechanism.
+  assert.equal(mid.matches, true);
+  assert.match(mid.detail, /chainSeq 3/);
+});
+
+test('drop one sealed event, re-seal the remainder: an earlier anchor catches it', () => {
+  const honest = verifyChain(seal(raw));
+  const anchoredHead = honest.recomputedHead; // written before the forgery, at seq 5
+  // The forgery: remove one record and re-seal from GENESIS so the result is internally
+  // perfect -- every hash, every link, every sequence number consistent.
+  const forged = verifyChain(seal(raw.filter((e) => e.id !== 'ev-3')));
+  assert.equal(forged.ok, true, 'the forged chain is internally consistent, as expected');
+  assert.equal(forged.sealedEvents, 4);
+  const a = checkAnchor(forged, { heads: { 'acct-1': { seq: 5, headHash: anchoredHead } } }, 'acct-1');
+  assert.equal(a.matches, false);
 });

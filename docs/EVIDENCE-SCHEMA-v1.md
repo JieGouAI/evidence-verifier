@@ -306,8 +306,14 @@ An implementation that reproduces this hash from the input above conforms to §6
 ## 7. Outsider verification procedure
 1. Obtain the account's evidence-pack export and the anchor objects.
 2. Order events per §6.3; recompute the chain from genesis; confirm each stored `hash` matches.
-3. Confirm the recomputed head hash equals `heads[accountId].headHash` in an anchor whose
-   write-once timestamp postdates the range.
+3. Compare against the anchor **at the anchor's own `seq`**: recompute the head as of that
+   seq and confirm it equals `heads[accountId].headHash`. An anchor at seq N is a statement
+   about the history through N and says nothing about what came after, so comparing it
+   against the export's FINAL head reports a mismatch for every mid-chain anchor against an
+   honest chain. An export that cannot reach its anchor's seq is **not anchor-verified** —
+   treat that as a failure, not as an inconclusive result: dropping a record and re-sealing
+   the remainder produces exactly that shape. (Corrected 2026-09-03, reported by an outside
+   reader who ran the verifier; the published tool had both behaviours wrong.)
 4. Validate every event against §2/§4/§5 (fields, action names, resource types).
 5. What this establishes — and does not — is exactly §3.
 

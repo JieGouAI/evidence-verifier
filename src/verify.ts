@@ -31,6 +31,14 @@ export interface ChainReport {
   sealedEvents: number;
   unsealedEvents: number;
   recomputedHead: string | undefined;
+  /**
+   * The recomputed head at every sealed seq. An anchor is a statement about the history up
+   * to ITS OWN seq, so comparing it against the final head (what this file did until
+   * 2026-09-03) reports DIFFERS for every mid-chain anchor against an honest chain -- a
+   * false accusation, and the reason "an earlier anchor pins the history before it" had no
+   * mechanism under it. Reported from outside by a reader who ran the tool.
+   */
+  headBySeq: Map<number, string>;
   problems: ChainProblem[];
   ok: boolean;
 }
@@ -43,6 +51,7 @@ export interface ChainReport {
  */
 export function verifyChain(events: ExportedEvent[]): ChainReport {
   const problems: ChainProblem[] = [];
+  const headBySeq = new Map<number, string>();
   const sealed = events
     .filter((e) => typeof e.chainSeq === 'number')
     .sort((a, b) => (a.chainSeq as number) - (b.chainSeq as number));
@@ -109,6 +118,7 @@ export function verifyChain(events: ExportedEvent[]): ChainReport {
     prevOrderKey = orderKey;
     prevHash = e.hash;
     prevSeq = seq;
+    headBySeq.set(seq, e.hash);
   }
 
   return {
@@ -116,6 +126,7 @@ export function verifyChain(events: ExportedEvent[]): ChainReport {
     sealedEvents: sealed.length,
     unsealedEvents: unsealed,
     recomputedHead: sealed.length ? prevHash : undefined,
+    headBySeq,
     problems,
     ok: problems.length === 0,
   };
@@ -169,26 +180,45 @@ export function checkAnchor(
       detail: 'no sealed events were recomputed; nothing to compare',
     };
   }
-  if (typeof head.seq === 'number' && report.sealedEvents < head.seq) {
+  // Compare at the anchor's OWN seq. An anchor at seq 3 says nothing about seq 5, and
+  // an honest chain that has simply grown past its last anchor is not a mismatch.
+  if (typeof head.seq === 'number') {
+    const at = report.headBySeq.get(head.seq);
+    if (at === undefined) {
+      // The export does not reach the anchored seq. This is a FAILURE, not an
+      // inconclusive: dropping a record and re-sealing the remainder produces exactly
+      // this shape, and 'export a fuller range' is advice offered to the one party
+      // guaranteed not to take it.
+      return {
+        anchoredAt: anchor.anchoredAt,
+        anchoredHead: head.headHash,
+        matches: false,
+        detail:
+          'anchor covers chainSeq ' +
+          head.seq +
+          ', export reaches only ' +
+          report.sealedEvents +
+          ' sealed events -- an export that cannot reach its own anchor is NOT anchor-verified',
+      };
+    }
+    const matchesAtSeq = head.headHash === at;
     return {
       anchoredAt: anchor.anchoredAt,
       anchoredHead: head.headHash,
-      matches: undefined,
-      detail:
-        'anchor covers chainSeq ' +
-        head.seq +
-        ', export contains ' +
-        report.sealedEvents +
-        ' sealed events -- export a fuller range or use an earlier anchor',
+      matches: matchesAtSeq,
+      detail: matchesAtSeq
+        ? 'recomputed head at chainSeq ' + head.seq + ' equals the anchored head'
+        : 'recomputed head at chainSeq ' + head.seq + ' DIFFERS from the anchored head',
     };
   }
+  // A seq-less anchor can only be read against the final head.
   const matches = head.headHash === report.recomputedHead;
   return {
     anchoredAt: anchor.anchoredAt,
     anchoredHead: head.headHash,
     matches,
     detail: matches
-      ? 'recomputed head equals the anchored head'
-      : 'recomputed head DIFFERS from the anchored head',
+      ? 'recomputed head equals the anchored head (anchor carries no seq)'
+      : 'recomputed head DIFFERS from the anchored head (anchor carries no seq)',
   };
 }
