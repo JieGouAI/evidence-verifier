@@ -47,6 +47,12 @@ It does **not** establish:
   an outsider cannot verify them and this tool honestly does not try. Your
   trust in the anchor comes from the write-once property of the store you
   fetched it from.
+- **Sequence authority.** `chainSeq` is assigned by the operator's own sealer.
+  A *withheld* record therefore surfaces here as a `seq-gap` — but a history
+  renumbered and re-sealed wholesale does not, because it is internally
+  consistent. Only an anchor already written pins the history before it, so
+  past the last anchor this tool establishes consistency, not authorship of
+  the sequence.
 
 This mirrors section 3 of the schema. If a verifier ever claims more than
 this, distrust the claim first.
