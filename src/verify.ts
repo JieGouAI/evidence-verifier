@@ -3,8 +3,11 @@
  *
  * What this DOES establish (schema SS3): integrity of the sealed sequence, and
  * agreement with an externally anchored head. What it does NOT establish:
- * completeness (nothing here can show that every action produced a record) or
- * verdict correctness. Signatures are the operator's symmetric HMACs and are
+ * completeness (nothing here can show that every action produced a record),
+ * verdict correctness, or sequence authority -- a withheld record surfaces
+ * below as a seq-gap, but a history renumbered and re-sealed wholesale by the
+ * operator's own sealer does not, and only an anchor already written bounds
+ * that. Signatures are the operator's symmetric HMACs and are
  * deliberately NOT checked here -- an outsider cannot verify them, and
  * pretending to would be theater. The trust root of this tool is keyless
  * recomputation plus the anchor store's write-once property.
