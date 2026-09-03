@@ -71,7 +71,8 @@ the two drift.
   to the write-once anchor store pins the history that preceded it, so the exposure is the window
   since the last anchor rather than the whole chain. A counter the operator's application can
   neither advance nor reset would close it; this format does not have one. (Roadmap R5. Reported by
-  an outside reader, 2026-09-03, from the published spec and the public verifier source.)
+  Andrey Lazarev, TactiQ AI, 2026-09-03, from the published spec and the public verifier
+  source; the anchor-comparison correction in §7 is his too, found by running the verifier.)
 
 This section is the honest boundary of the format, stated so that no reader over-trusts it. The
 operator's own shorthand: the records are strong on **faithful** (what happened was recorded
