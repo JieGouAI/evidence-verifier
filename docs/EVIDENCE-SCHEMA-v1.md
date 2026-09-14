@@ -29,7 +29,7 @@ the two drift.
 | `id` | Unique event id |
 | `accountId` | The account whose chain this event belongs to |
 | `actorId` / `actorEmail` | The identity that performed the action |
-| `action` | One of the 565 registered action names (§4) |
+| `action` | One of the 567 registered action names (§4) |
 | `resourceType` / `resourceId` / `resourceName` | What was acted on — one of 159 registered resource types (§5) |
 | `before` / `after` | Resource state before/after, when captured |
 | `metadata` | Action-specific context |
@@ -79,7 +79,7 @@ operator's own shorthand: the records are strong on **faithful** (what happened 
 intact, back to the last anchored head), practice-grade on **authorized** (approvals are recorded but interpretation still involves
 the operator), and not yet evidencing **complete** (nothing shows what never happened).
 
-## 4. Action vocabulary (565 actions, grouped by prefix)
+## 4. Action vocabulary (567 actions, grouped by prefix)
 
 - **`account.*`** (33): `account.approval_gate_email_changed` · `account.brand_voice_deleted` · `account.brand_voice_updated` · `account.budget_ceiling_breached` · `account.budget_override_set` · `account.budget_paused` · `account.budget_resumed` · `account.cascade_cleanup` · `account.ceiling_breached` · `account.data_exported` · `account.default_locale_changed` · `account.deleted` · `account.deletion_cancelled` · `account.deletion_confirmed` · `account.deletion_executed` · `account.deletion_requested` · `account.department_brand_voice_deleted` · `account.department_brand_voice_updated` · `account.domain_config_deleted` · `account.domain_config_updated` · `account.mfa_required_disabled` · `account.mfa_required_enabled` · `account.migrated_to_portal` · `account.model_config_changed` · `account.plan_changed` · `account.renamed` · `account.saml_config_deleted` · `account.saml_config_updated` · `account.security_preset_applied` · `account.sharing_settings_updated` · `account.sso_connection_tested` · `account.user_auto_joined` · `account.vertical_changed`
 - **`account_gate.*`** (4): `account_gate.disabled` · `account_gate.fired` · `account_gate.registered` · `account_gate.updated`
@@ -211,7 +211,7 @@ the operator), and not yet evidencing **complete** (nothing shows what never hap
 - **`survey.*`** (1): `survey.submitted`
 - **`system.*`** (1): `system`
 - **`time_entry.*`** (3): `time_entry.approved` · `time_entry.created` · `time_entry.exported`
-- **`tool_approval.*`** (4): `tool_approval.approved` · `tool_approval.denied` · `tool_approval.expired` · `tool_approval.requested`
+- **`tool_approval.*`** (6): `tool_approval.approved` · `tool_approval.denied` · `tool_approval.dispatch_failed` · `tool_approval.dispatched` · `tool_approval.expired` · `tool_approval.requested`
 - **`trial.*`** (4): `trial.created` · `trial.expired` · `trial.nurture_email_sent` · `trial.reminder_sent`
 - **`trigger.*`** (3): `trigger.created` · `trigger.deleted` · `trigger.updated`
 - **`trust.*`** (3): `trust.deescalation_applied` · `trust.escalation_applied` · `trust.escalation_recommended`
