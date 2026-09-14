@@ -4,6 +4,11 @@
 
 # Audit Coverage Census — public summary
 
+**Regenerated 2026-09-08** from the internal scan; the internal scan may be newer than this
+public copy. This mirror is synced from the monorepo after each regeneration (its
+`evidence-verifier-oss-sync` step), so any lag here is the interval between a regeneration and
+its sync — never a hand edit, which the monorepo's drift gate forbids.
+
 JieGou publishes not only what its audit layer covers, but a census of what it does **not**
 yet cover — because a coverage claim with no stated remainder is unfalsifiable.
 
@@ -18,13 +23,13 @@ scan — not proven-unaudited.** Dynamic imports and aliased calls are invisible
 
 | Measure | Count |
 |---|---|
-| Server modules scanned | 939 |
-| Modules in the audited closure | 365 |
-| API route handlers | 1009 |
+| Server modules scanned | 949 |
+| Modules in the audited closure | 375 |
+| API route handlers | 1018 |
 | audited-direct | 212 |
-| audited-via-module | 756 |
+| audited-via-module | 765 |
 | none-visible | 41 |
-| Mutation routes (POST/PUT/DELETE/PATCH) | 692 |
+| Mutation routes (POST/PUT/DELETE/PATCH) | 700 |
 | **Mutation routes with no visible audit path (the ratchet)** | **0** |
 | Declared exemptions (reviewed, reasons published below) | 19 |
 
