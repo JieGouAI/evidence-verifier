@@ -4,7 +4,7 @@
 
 # Audit Coverage Census — public summary
 
-**Regenerated 2026-09-08** from the internal scan; the internal scan may be newer than this
+**Regenerated 2026-09-16** from the internal scan; the internal scan may be newer than this
 public copy. This mirror is synced from the monorepo after each regeneration (its
 `evidence-verifier-oss-sync` step), so any lag here is the interval between a regeneration and
 its sync — never a hand edit, which the monorepo's drift gate forbids.
@@ -23,7 +23,7 @@ scan — not proven-unaudited.** Dynamic imports and aliased calls are invisible
 
 | Measure | Count |
 |---|---|
-| Server modules scanned | 949 |
+| Server modules scanned | 950 |
 | Modules in the audited closure | 375 |
 | API route handlers | 1018 |
 | audited-direct | 212 |
