@@ -29,10 +29,11 @@ the two drift.
 | `id` | Unique event id |
 | `accountId` | The account whose chain this event belongs to |
 | `actorId` / `actorEmail` | The identity that performed the action |
-| `action` | One of the 567 registered action names (§4) |
+| `action` | One of the 569 registered action names (§4) |
 | `resourceType` / `resourceId` / `resourceName` | What was acted on — one of 159 registered resource types (§5) |
 | `before` / `after` | Resource state before/after, when captured |
-| `metadata` | Action-specific context |
+| `metadata` | Action-specific context. One key is RESERVED and server-stamped: `metadata.build` — see below |
+| `metadata.build` | Present when the writing deployment knows its own build identity: `{ imageTag }` — the container image tag serving the request (`{user}-{short-sha}`), injected by the deployment from the same expression that selects the image. Server-stamped last, so a caller-supplied `build` key cannot displace it. Tamper-protected in both the per-event HMAC (signed only-when-present, like `model`) and the chain (it rides inside `metadata`, which is a canonical field). Absent on events written before 2026-09-16 and from deployments that do not know their image tag |
 | `agentContext` | Present when the action was initiated by an AI agent: which agent identity |
 | `onBehalf` | Present when performed under a governed human-impersonation grant; tamper-protected in both the per-event HMAC and the chain |
 | `model` | Present when an LLM produced the audited output: which model, which configuration; tamper-protected in both the per-event HMAC and the chain |
@@ -50,7 +51,10 @@ the two drift.
   beyond the operator's reach. The qualifier is load-bearing: the guarantee is anchored history,
   not the unanchored tail (see *Sequence authority* below).
 - **Attribution as recorded:** each recorded action carries an actor, and — where applicable — the
-  agent identity, impersonation grant, and model attribution under the same tamper protection.
+  agent identity, impersonation grant, model attribution, and the build that wrote it
+  (`metadata.build.imageTag`) under the same tamper protection. The build stamp says which image
+  was serving, not which source tree produced that image; the link from tag to commit is the
+  operator's build pipeline, and is testimony.
 - **Approval-as-recorded:** for actions carrying a provenance receipt, the recorded approval chain
   (who approved, what they were shown, when) is intact.
 
@@ -79,7 +83,39 @@ operator's own shorthand: the records are strong on **faithful** (what happened 
 intact, back to the last anchored head), practice-grade on **authorized** (approvals are recorded but interpretation still involves
 the operator), and not yet evidencing **complete** (nothing shows what never happened).
 
-## 4. Action vocabulary (567 actions, grouped by prefix)
+### Signature choice: symmetric by decision, dated — not by default
+
+Every signature in this format is **HMAC-SHA256, symmetric**: the per-event signature (§2), the
+checkpoint signature and the WORM anchor signature (§6.5). Until 2026-09-18 this document
+disclosed the *consequence* of that — §6.5's "an outside inspector can NOT verify them without the
+operator's key" — without ever recording that symmetric was **chosen**. A reader was therefore
+entitled to assume a deliberation that had not happened. It has now happened, and this paragraph is
+its record.
+
+**Ruling, 2026-09-18: keep HMAC, and say so here.** The reasoning, stated so it can be argued with:
+
+- **The outsider path does not run on these signatures and never did.** It is keyless by
+  construction (§7): recompute the chain from genesis and compare the head to an anchor in a
+  write-once, retention-locked store. What an outsider relies on is the WORM property, not a
+  signature. An asymmetric signature would give that path a second, independent leg — it would not
+  give it its first one.
+- **A symmetric key that verifies also forges.** Publishing it so outsiders could check the chain
+  would hand them the ability to rewrite it, which is why the verifier deliberately does not check
+  these signatures at all.
+- **HIPAA §164.312(c) is satisfied by HMAC but not uniquely satisfied by it.** That compliance tag
+  was the only "why" on file before this ruling. It is a true statement about HMAC and a bad reason
+  to have stopped looking; it is not the reason recorded here.
+- **What this does not close.** Authenticity of anchored heads for an outsider remains a
+  bucket-trust residual, exactly as this section and §6.5 already say. Asymmetric signing at the
+  checkpoint/anchor layer (Ed25519, KMS-held, public key published here) is **deferred, not
+  rejected** — and deliberately deferred *to be designed alongside* the sequence-authority work,
+  because "who may re-sign a rewritten history" and "who may renumber it" are one question, not
+  two. Deciding the signature first would fix the cheaper half of a design whose expensive half is
+  still open.
+
+A dated deferral is a decision; an undated one is a default. This one is dated.
+
+## 4. Action vocabulary (569 actions, grouped by prefix)
 
 - **`account.*`** (33): `account.approval_gate_email_changed` · `account.brand_voice_deleted` · `account.brand_voice_updated` · `account.budget_ceiling_breached` · `account.budget_override_set` · `account.budget_paused` · `account.budget_resumed` · `account.cascade_cleanup` · `account.ceiling_breached` · `account.data_exported` · `account.default_locale_changed` · `account.deleted` · `account.deletion_cancelled` · `account.deletion_confirmed` · `account.deletion_executed` · `account.deletion_requested` · `account.department_brand_voice_deleted` · `account.department_brand_voice_updated` · `account.domain_config_deleted` · `account.domain_config_updated` · `account.mfa_required_disabled` · `account.mfa_required_enabled` · `account.migrated_to_portal` · `account.model_config_changed` · `account.plan_changed` · `account.renamed` · `account.saml_config_deleted` · `account.saml_config_updated` · `account.security_preset_applied` · `account.sharing_settings_updated` · `account.sso_connection_tested` · `account.user_auto_joined` · `account.vertical_changed`
 - **`account_gate.*`** (4): `account_gate.disabled` · `account_gate.fired` · `account_gate.registered` · `account_gate.updated`
@@ -106,7 +142,7 @@ the operator), and not yet evidencing **complete** (nothing shows what never hap
 - **`channel_task.*`** (1): `channel_task.created`
 - **`chat_agent.*`** (4): `chat_agent.created` · `chat_agent.deleted` · `chat_agent.rules_imported` · `chat_agent.updated`
 - **`client_portal.*`** (2): `client_portal.config_updated` · `client_portal.self_service_submitted`
-- **`cockpit_item.*`** (9): `cockpit_item.acknowledged` · `cockpit_item.approved` · `cockpit_item.executed` · `cockpit_item.held` · `cockpit_item.ingested` · `cockpit_item.measured` · `cockpit_item.rejected` · `cockpit_item.submitted` · `cockpit_item.updated`
+- **`cockpit_item.*`** (10): `cockpit_item.acknowledged` · `cockpit_item.approved` · `cockpit_item.batch_decided` · `cockpit_item.executed` · `cockpit_item.held` · `cockpit_item.ingested` · `cockpit_item.measured` · `cockpit_item.rejected` · `cockpit_item.submitted` · `cockpit_item.updated`
 - **`code_approval.*`** (3): `code_approval.approved` · `code_approval.rejected` · `code_approval.requested`
 - **`code_step.*`** (1): `code_step.executed`
 - **`coding_agent.*`** (1): `coding_agent.tool_call`
@@ -165,7 +201,8 @@ the operator), and not yet evidencing **complete** (nothing shows what never hap
 - **`knowledge_source.*`** (5): `knowledge_source.connected` · `knowledge_source.disconnected` · `knowledge_source.health_checked` · `knowledge_source.queried` · `knowledge_source.updated`
 - **`leak_audit.*`** (2): `leak_audit.created` · `leak_audit.delivered`
 - **`learning_report.*`** (1): `learning_report.sent`
-- **`location_registry.*`** (1): `location_registry.updated`
+- **`location_fact.*`** (1): `location_fact.recorded`
+- **`location_registry.*`** (2): `location_registry.legacy_read` · `location_registry.updated`
 - **`managed_agent.*`** (1): `managed_agent.auto_provisioned`
 - **`managed_agent_config.*`** (1): `managed_agent_config.updated`
 - **`matter.*`** (4): `matter.created` · `matter.deleted` · `matter.imported` · `matter.updated`
@@ -175,7 +212,7 @@ the operator), and not yet evidencing **complete** (nothing shows what never hap
 - **`memory.*`** (1): `memory.consulted`
 - **`messaging.*`** (4): `messaging.reply_sent` · `messaging.template_created` · `messaging.template_deleted` · `messaging.template_updated`
 - **`model_certification.*`** (6): `model_certification.baselined` · `model_certification.grace_expired` · `model_certification.recert_failed` · `model_certification.recertified` · `model_certification.restored` · `model_certification.swap_detected`
-- **`msp.*`** (12): `msp.action_executed` · `msp.action_proposed` · `msp.action_rejected` · `msp.auto_trigger_changed` · `msp.autonomy_changed` · `msp.autonomy_demoted` · `msp.autonomy_gated` · `msp.autonomy_graduated` · `msp.kb_articles_seeded` · `msp.onboarding_completed` · `msp.onboarding_step_completed` · `msp.shadow_interaction_reviewed`
+- **`msp.*`** (13): `msp.action_executed` · `msp.action_proposed` · `msp.action_rejected` · `msp.auto_trigger_changed` · `msp.autonomy_changed` · `msp.autonomy_demoted` · `msp.autonomy_gated` · `msp.autonomy_graduated` · `msp.autonomy_reassessed` · `msp.kb_articles_seeded` · `msp.onboarding_completed` · `msp.onboarding_step_completed` · `msp.shadow_interaction_reviewed`
 - **`msp_tenant.*`** (3): `msp_tenant.created` · `msp_tenant.deleted` · `msp_tenant.updated`
 - **`open_dental.*`** (4): `open_dental.appointment_created` · `open_dental.connected` · `open_dental.disconnected` · `open_dental.synced`
 - **`output_destination.*`** (2): `output_destination.delivered` · `output_destination.failed`
@@ -197,8 +234,6 @@ the operator), and not yet evidencing **complete** (nothing shows what never hap
 - **`review.*`** (3): `review.completed` · `review.requested` · `review.submitted`
 - **`review_sample.*`** (2): `review_sample.reviewed` · `review_sample.selected`
 - **`run.*`** (3): `run.deleted` · `run.deletion_blocked` · `run.shared`
-- **`s identity for webhook paths.*`** (1): `s identity for webhook paths.
-  // (No semicolons in union-body comments — extractUnion`
 - **`schedule.*`** (3): `schedule.created` · `schedule.deleted` · `schedule.updated`
 - **`screen_share.*`** (5): `screen_share.participant_invited` · `screen_share.recording_started` · `screen_share.recording_stopped` · `screen_share.room_created` · `screen_share.room_ended`
 - **`sdk.*`** (4): `sdk.coding_agent_executed` · `sdk.message_sent` · `sdk.recipe_executed` · `sdk.workflow_executed`
@@ -209,7 +244,6 @@ the operator), and not yet evidencing **complete** (nothing shows what never hap
 - **`supervisor_license.*`** (2): `supervisor_license.confirmed` · `supervisor_license.nominated`
 - **`support_grant.*`** (5): `support_grant.accessed` · `support_grant.created` · `support_grant.denied` · `support_grant.requested` · `support_grant.revoked`
 - **`survey.*`** (1): `survey.submitted`
-- **`system.*`** (1): `system`
 - **`time_entry.*`** (3): `time_entry.approved` · `time_entry.created` · `time_entry.exported`
 - **`tool_approval.*`** (6): `tool_approval.approved` · `tool_approval.denied` · `tool_approval.dispatch_failed` · `tool_approval.dispatched` · `tool_approval.expired` · `tool_approval.requested`
 - **`trial.*`** (4): `trial.created` · `trial.expired` · `trial.nurture_email_sent` · `trial.reminder_sent`
@@ -249,6 +283,12 @@ resourceName, before, after, metadata, agentContext, timestamp` — where an abs
 events canonicalize byte-identically); the whole object is passed through `stableStringify`
 (which orders all keys lexicographically). Fields NOT part of the canonical form: `id`,
 `signature`, `sigVersion`, `canonicalVersion`, `impersonated`, `chainSeq`, `prevHash`, `hash`.
+
+`metadata` is canonicalized **as an opaque object** — every key it carries, including the reserved
+server-stamped `build` (§2), is hashed by §6.1 like any other. A verifier written against this
+section therefore needs no change when a reserved metadata key is added, and that is why build
+provenance was put there rather than beside `model` as a 13th base field: growing the base would
+have broken every already-distributed verifier on every newly written event.
 
 ### 6.3 Event hash and chain
 ```
