@@ -29,7 +29,7 @@ the two drift.
 | `id` | Unique event id |
 | `accountId` | The account whose chain this event belongs to |
 | `actorId` / `actorEmail` | The identity that performed the action |
-| `action` | One of the 569 registered action names (§4) |
+| `action` | One of the 570 registered action names (§4) |
 | `resourceType` / `resourceId` / `resourceName` | What was acted on — one of 159 registered resource types (§5) |
 | `before` / `after` | Resource state before/after, when captured |
 | `metadata` | Action-specific context. One key is RESERVED and server-stamped: `metadata.build` — see below |
@@ -115,7 +115,7 @@ its record.
 
 A dated deferral is a decision; an undated one is a default. This one is dated.
 
-## 4. Action vocabulary (569 actions, grouped by prefix)
+## 4. Action vocabulary (570 actions, grouped by prefix)
 
 - **`account.*`** (33): `account.approval_gate_email_changed` · `account.brand_voice_deleted` · `account.brand_voice_updated` · `account.budget_ceiling_breached` · `account.budget_override_set` · `account.budget_paused` · `account.budget_resumed` · `account.cascade_cleanup` · `account.ceiling_breached` · `account.data_exported` · `account.default_locale_changed` · `account.deleted` · `account.deletion_cancelled` · `account.deletion_confirmed` · `account.deletion_executed` · `account.deletion_requested` · `account.department_brand_voice_deleted` · `account.department_brand_voice_updated` · `account.domain_config_deleted` · `account.domain_config_updated` · `account.mfa_required_disabled` · `account.mfa_required_enabled` · `account.migrated_to_portal` · `account.model_config_changed` · `account.plan_changed` · `account.renamed` · `account.saml_config_deleted` · `account.saml_config_updated` · `account.security_preset_applied` · `account.sharing_settings_updated` · `account.sso_connection_tested` · `account.user_auto_joined` · `account.vertical_changed`
 - **`account_gate.*`** (4): `account_gate.disabled` · `account_gate.fired` · `account_gate.registered` · `account_gate.updated`
@@ -188,7 +188,7 @@ A dated deferral is a decision; an undated one is a default. This one is dated.
 - **`hipaa.*`** (2): `hipaa.baa_signed` · `hipaa.breach_detected`
 - **`home_services.*`** (8): `home_services.kb_articles_seeded` · `home_services.kb_csv_imported` · `home_services.kb_jobber_imported` · `home_services.onboarding_completed` · `home_services.onboarding_step_completed` · `home_services.shadow_interaction_reviewed` · `home_services.sla_escalation_rules_updated` · `home_services.sla_tiers_updated`
 - **`hook.*`** (5): `hook.created` · `hook.deleted` · `hook.execution_blocked` · `hook.fired` · `hook.updated`
-- **`hybrid_agent.*`** (9): `hybrid_agent.asset_uploaded` · `hybrid_agent.connector_call` · `hybrid_agent.context_query` · `hybrid_agent.deleted` · `hybrid_agent.enrollment_minted` · `hybrid_agent.registered` · `hybrid_agent.revoked` · `hybrid_agent.token_rotated` · `hybrid_agent.updated`
+- **`hybrid_agent.*`** (10): `hybrid_agent.asset_uploaded` · `hybrid_agent.attestation_refused` · `hybrid_agent.connector_call` · `hybrid_agent.context_query` · `hybrid_agent.deleted` · `hybrid_agent.enrollment_minted` · `hybrid_agent.registered` · `hybrid_agent.revoked` · `hybrid_agent.token_rotated` · `hybrid_agent.updated`
 - **`inbound_event.*`** (1): `inbound_event.dispatched`
 - **`insights.*`** (1): `insights.digest_sent`
 - **`insurance_agency.*`** (4): `insurance_agency.kb_articles_seeded` · `insurance_agency.onboarding_completed` · `insurance_agency.onboarding_step_completed` · `insurance_agency.shadow_interaction_reviewed`
