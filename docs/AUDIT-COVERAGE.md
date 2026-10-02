@@ -4,7 +4,7 @@
 
 # Audit Coverage Census — public summary
 
-**Regenerated 2026-09-25** from the internal scan; the internal scan may be newer than this
+**Regenerated 2026-10-02** from the internal scan; the internal scan may be newer than this
 public copy. This mirror is synced from the monorepo after each regeneration (its
 `evidence-verifier-oss-sync` step), so any lag here is the interval between a regeneration and
 its sync — never a hand edit, which the monorepo's drift gate forbids.
@@ -23,15 +23,15 @@ scan — not proven-unaudited.** Dynamic imports and aliased calls are invisible
 
 | Measure | Count |
 |---|---|
-| Server modules scanned | 970 |
-| Modules in the audited closure | 389 |
-| API route handlers | 1033 |
-| audited-direct | 212 |
-| audited-via-module | 780 |
-| none-visible | 41 |
-| Mutation routes (POST/PUT/DELETE/PATCH) | 711 |
+| Server modules scanned | 978 |
+| Modules in the audited closure | 392 |
+| API route handlers | 1037 |
+| audited-direct | 214 |
+| audited-via-module | 784 |
+| none-visible | 39 |
+| Mutation routes (POST/PUT/DELETE/PATCH) | 715 |
 | **Mutation routes with no visible audit path (the ratchet)** | **0** |
-| Declared exemptions (reviewed, reasons published below) | 19 |
+| Declared exemptions (reviewed, reasons published below) | 17 |
 
 ## The ratchet
 
@@ -49,7 +49,7 @@ endpoints lack a visible audit path would be a finding-shaped disclosure, and th
 exists to bound a claim, not to map an attack surface. The number, the method, and the
 shrink-only rule are the auditable parts; a customer's auditor can request the list under NDA.
 
-## Declared exemptions (19)
+## Declared exemptions (17)
 
 Mutation-method routes that deliberately carry no audit call, each with a reviewed reason —
 the honest form of "covered." An exemption without a defensible reason is debt, not coverage;
@@ -63,8 +63,6 @@ the reasons are published so the reader can judge them.
 - `/api/hybrid-agents/[id]/manifest` — seat skill-inventory telemetry, refreshed on every substrate pull; same noise class as heartbeat
 - `/api/mcp/audit-flush` — audit TRANSPORT: batch-persists pre-formed MCP audit events — its writes ARE audit records; wrapping the audit pipe in logAuditEvent would be recursion, not coverage
 - `/api/mcp/validate-key` — internal key-validity check for the MCP server (shared-secret auth); read-only despite POST
-- `/api/ollama/models` — proxy to the customer's own Ollama endpoint (BYO infra); no JieGou tenant state touched
-- `/api/ollama/pull` — proxy to the customer's own Ollama endpoint (BYO infra); no JieGou tenant state touched
 - `/api/video/analyze` — deprecated tombstone — returns 410 Gone unconditionally
 - `/api/video/split` — deprecated tombstone — returns 410 Gone unconditionally
 - `/api/schedules/warmup-pskin` — Redis cache pre-warm for the PSkin schedule viewer — regenerates a derived cache from Google Sheets; no source-of-truth state changes
