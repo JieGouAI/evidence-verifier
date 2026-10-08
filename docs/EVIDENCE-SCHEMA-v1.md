@@ -29,7 +29,7 @@ the two drift.
 | `id` | Unique event id |
 | `accountId` | The account whose chain this event belongs to |
 | `actorId` / `actorEmail` | The identity that performed the action |
-| `action` | One of the 584 registered action names (§4) |
+| `action` | One of the 587 registered action names (§4) |
 | `resourceType` / `resourceId` / `resourceName` | What was acted on — one of 159 registered resource types (§5) |
 | `before` / `after` | Resource state before/after, when captured |
 | `metadata` | Action-specific context. One key is RESERVED and server-stamped: `metadata.build` — see below |
@@ -115,7 +115,7 @@ its record.
 
 A dated deferral is a decision; an undated one is a default. This one is dated.
 
-## 4. Action vocabulary (584 actions, grouped by prefix)
+## 4. Action vocabulary (587 actions, grouped by prefix)
 
 - **`account.*`** (33): `account.approval_gate_email_changed` · `account.brand_voice_deleted` · `account.brand_voice_updated` · `account.budget_ceiling_breached` · `account.budget_override_set` · `account.budget_paused` · `account.budget_resumed` · `account.cascade_cleanup` · `account.ceiling_breached` · `account.data_exported` · `account.default_locale_changed` · `account.deleted` · `account.deletion_cancelled` · `account.deletion_confirmed` · `account.deletion_executed` · `account.deletion_requested` · `account.department_brand_voice_deleted` · `account.department_brand_voice_updated` · `account.domain_config_deleted` · `account.domain_config_updated` · `account.mfa_required_disabled` · `account.mfa_required_enabled` · `account.migrated_to_portal` · `account.model_config_changed` · `account.plan_changed` · `account.renamed` · `account.saml_config_deleted` · `account.saml_config_updated` · `account.security_preset_applied` · `account.sharing_settings_updated` · `account.sso_connection_tested` · `account.user_auto_joined` · `account.vertical_changed`
 - **`account_gate.*`** (4): `account_gate.disabled` · `account_gate.fired` · `account_gate.registered` · `account_gate.updated`
@@ -185,7 +185,7 @@ A dated deferral is a decision; an undated one is a default. This one is dated.
 - **`governed_loop.*`** (3): `governed_loop.event_recorded` · `governed_loop.gate_decided` · `governed_loop.receipt_recorded`
 - **`governed_memory.*`** (4): `governed_memory.expired` · `governed_memory.promoted` · `governed_memory.recalled` · `governed_memory.sealed`
 - **`group.*`** (5): `group.created` · `group.deleted` · `group.member_added` · `group.member_removed` · `group.updated`
-- **`gtm.*`** (35): `gtm.artifact_registered` · `gtm.autopilot_config_set` · `gtm.ci_config_updated` · `gtm.ci_dispatch_forced` · `gtm.ci_rec_dispatched` · `gtm.ci_rec_ruled` · `gtm.ci_recs_updated` · `gtm.demo_video_requested` · `gtm.digest_archived` · `gtm.dispatch_seat_default_set` · `gtm.essay_pipeline_updated` · `gtm.feed_run_blocked` · `gtm.feed_run_dispatched` · `gtm.feed_run_dispatched` · `gtm.feed_trigger_config_set` · `gtm.hook_corrected` · `gtm.hook_dispatched` · `gtm.hooks_queued` · `gtm.operating_fact_added` · `gtm.operating_fact_removed` · `gtm.operating_facts_refreshed` · `gtm.reddit_research_dispatched` · `gtm.reply_sweep_dispatched` · `gtm.run_promoted` · `gtm.run_reverted` · `gtm.run_started` · `gtm.schedule_changed` · `gtm.skill_dispatched` · `gtm.slot_set` · `gtm.theme_config_updated` · `gtm.theme_request_created` · `gtm.theme_request_decided` · `gtm.vocab_request_created` · `gtm.vocab_request_decided` · `gtm.yt_pipeline_updated`
+- **`gtm.*`** (36): `gtm.artifact_registered` · `gtm.autopilot_config_set` · `gtm.ci_config_updated` · `gtm.ci_dispatch_forced` · `gtm.ci_rec_dispatched` · `gtm.ci_rec_ruled` · `gtm.ci_recs_updated` · `gtm.demo_video_requested` · `gtm.digest_archived` · `gtm.dispatch_seat_default_set` · `gtm.essay_pipeline_updated` · `gtm.feed_run_blocked` · `gtm.feed_run_dispatched` · `gtm.feed_run_dispatched` · `gtm.feed_trigger_config_set` · `gtm.hook_corrected` · `gtm.hook_dispatched` · `gtm.hooks_queued` · `gtm.operating_fact_added` · `gtm.operating_fact_removed` · `gtm.operating_facts_refreshed` · `gtm.reddit_research_dispatched` · `gtm.reply_sweep_dispatched` · `gtm.run_promoted` · `gtm.run_reverted` · `gtm.run_started` · `gtm.schedule_changed` · `gtm.skill_dispatched` · `gtm.slot_set` · `gtm.theme_config_updated` · `gtm.theme_request_created` · `gtm.theme_request_decided` · `gtm.vocab_request_created` · `gtm.vocab_request_decided` · `gtm.x_lane_config_set` · `gtm.yt_pipeline_updated`
 - **`hipaa.*`** (2): `hipaa.baa_signed` · `hipaa.breach_detected`
 - **`home_services.*`** (8): `home_services.kb_articles_seeded` · `home_services.kb_csv_imported` · `home_services.kb_jobber_imported` · `home_services.onboarding_completed` · `home_services.onboarding_step_completed` · `home_services.shadow_interaction_reviewed` · `home_services.sla_escalation_rules_updated` · `home_services.sla_tiers_updated`
 - **`hook.*`** (5): `hook.created` · `hook.deleted` · `hook.execution_blocked` · `hook.fired` · `hook.updated`
@@ -257,7 +257,7 @@ A dated deferral is a decision; an undated one is a default. This one is dated.
 - **`video_job.*`** (2): `video_job.completed` · `video_job.failed`
 - **`website_crawl.*`** (5): `website_crawl.completed` · `website_crawl.created` · `website_crawl.failed` · `website_crawl.refresh_completed` · `website_crawl.refresh_failed`
 - **`work_receipt.*`** (1): `work_receipt.issued`
-- **`workflow.*`** (11): `workflow.created` · `workflow.deleted` · `workflow.execute` · `workflow.fork` · `workflow.imported_from_n8n` · `workflow.rollout_promoted` · `workflow.rollout_rolled_back` · `workflow.rollout_started` · `workflow.updated` · `workflow.version_created` · `workflow.version_rolled_back`
+- **`workflow.*`** (13): `workflow.browser_access_confirmed` · `workflow.browser_run_refused` · `workflow.created` · `workflow.deleted` · `workflow.execute` · `workflow.fork` · `workflow.imported_from_n8n` · `workflow.rollout_promoted` · `workflow.rollout_rolled_back` · `workflow.rollout_started` · `workflow.updated` · `workflow.version_created` · `workflow.version_rolled_back`
 - **`workflow_memory.*`** (5): `workflow_memory.compacted` · `workflow_memory.config_updated` · `workflow_memory.deleted` · `workflow_memory.read` · `workflow_memory.write`
 - **`workflow_run.*`** (5): `workflow_run.delegated` · `workflow_run.deleted` · `workflow_run.deletion_blocked` · `workflow_run.follow_up` · `workflow_run.shared`
 - **`zendesk.*`** (5): `zendesk.action_approved` · `zendesk.action_blocked` · `zendesk.action_executed` · `zendesk.action_held` · `zendesk.action_rejected`
