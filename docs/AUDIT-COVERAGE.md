@@ -25,11 +25,11 @@ scan — not proven-unaudited.** Dynamic imports and aliased calls are invisible
 |---|---|
 | Server modules scanned | 1038 |
 | Modules in the audited closure | 427 |
-| API route handlers | 1099 |
+| API route handlers | 1100 |
 | audited-direct | 217 |
-| audited-via-module | 844 |
+| audited-via-module | 845 |
 | none-visible | 38 |
-| Mutation routes (POST/PUT/DELETE/PATCH) | 765 |
+| Mutation routes (POST/PUT/DELETE/PATCH) | 766 |
 | **Mutation routes with no visible audit path (the ratchet)** | **0** |
 | Declared exemptions (reviewed, reasons published below) | 17 |
 
