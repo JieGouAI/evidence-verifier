@@ -24,7 +24,7 @@ scan — not proven-unaudited.** Dynamic imports and aliased calls are invisible
 | Measure | Count |
 |---|---|
 | Server modules scanned | 1038 |
-| Modules in the audited closure | 426 |
+| Modules in the audited closure | 427 |
 | API route handlers | 1099 |
 | audited-direct | 217 |
 | audited-via-module | 844 |
