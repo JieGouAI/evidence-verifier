@@ -29,7 +29,7 @@ the two drift.
 | `id` | Unique event id |
 | `accountId` | The account whose chain this event belongs to |
 | `actorId` / `actorEmail` | The identity that performed the action |
-| `action` | One of the 618 registered action names (§4) |
+| `action` | One of the 622 registered action names (§4) |
 | `resourceType` / `resourceId` / `resourceName` | What was acted on — one of 163 registered resource types (§5) |
 | `before` / `after` | Resource state before/after, when captured |
 | `metadata` | Action-specific context. One key is RESERVED and server-stamped: `metadata.build` — see below |
@@ -115,9 +115,9 @@ its record.
 
 A dated deferral is a decision; an undated one is a default. This one is dated.
 
-## 4. Action vocabulary (618 actions, grouped by prefix)
+## 4. Action vocabulary (622 actions, grouped by prefix)
 
-- **`account.*`** (33): `account.approval_gate_email_changed` · `account.brand_voice_deleted` · `account.brand_voice_updated` · `account.budget_ceiling_breached` · `account.budget_override_set` · `account.budget_paused` · `account.budget_resumed` · `account.cascade_cleanup` · `account.ceiling_breached` · `account.data_exported` · `account.default_locale_changed` · `account.deleted` · `account.deletion_cancelled` · `account.deletion_confirmed` · `account.deletion_executed` · `account.deletion_requested` · `account.department_brand_voice_deleted` · `account.department_brand_voice_updated` · `account.domain_config_deleted` · `account.domain_config_updated` · `account.mfa_required_disabled` · `account.mfa_required_enabled` · `account.migrated_to_portal` · `account.model_config_changed` · `account.plan_changed` · `account.renamed` · `account.saml_config_deleted` · `account.saml_config_updated` · `account.security_preset_applied` · `account.sharing_settings_updated` · `account.sso_connection_tested` · `account.user_auto_joined` · `account.vertical_changed`
+- **`account.*`** (35): `account.approval_gate_email_changed` · `account.brand_voice_deleted` · `account.brand_voice_updated` · `account.budget_ceiling_breached` · `account.budget_override_set` · `account.budget_paused` · `account.budget_resumed` · `account.cascade_cleanup` · `account.ceiling_breached` · `account.data_exported` · `account.default_locale_changed` · `account.deleted` · `account.deletion_cancelled` · `account.deletion_confirmed` · `account.deletion_executed` · `account.deletion_requested` · `account.department_brand_voice_deleted` · `account.department_brand_voice_updated` · `account.domain_config_deleted` · `account.domain_config_updated` · `account.managed_agent_ai_disclosure_changed` · `account.mfa_required_disabled` · `account.mfa_required_enabled` · `account.migrated_to_portal` · `account.model_config_changed` · `account.plan_changed` · `account.renamed` · `account.saml_config_deleted` · `account.saml_config_updated` · `account.security_preset_applied` · `account.sharing_settings_updated` · `account.sso_connection_tested` · `account.user_auto_joined` · `account.vertical_changed` · `account.voice_ai_disclosure_changed`
 - **`account_gate.*`** (4): `account_gate.disabled` · `account_gate.fired` · `account_gate.registered` · `account_gate.updated`
 - **`accounting_tax.*`** (6): `accounting_tax.kb_article_deleted` · `accounting_tax.kb_article_updated` · `accounting_tax.kb_articles_seeded` · `accounting_tax.onboarding_completed` · `accounting_tax.onboarding_step_completed` · `accounting_tax.shadow_interaction_reviewed`
 - **`accounting_tax_portal.*`** (2): `accounting_tax_portal.config_updated` · `accounting_tax_portal.document_submitted`
@@ -141,7 +141,7 @@ A dated deferral is a decision; an undated one is a default. This one is dated.
 - **`bundle.*`** (4): `bundle.created` · `bundle.deleted` · `bundle.forked` · `bundle.updated`
 - **`byok.*`** (3): `byok.call_refused` · `byok.fallback_policy_changed` · `byok.fallback_to_platform`
 - **`channel_task.*`** (1): `channel_task.created`
-- **`chat_agent.*`** (4): `chat_agent.created` · `chat_agent.deleted` · `chat_agent.rules_imported` · `chat_agent.updated`
+- **`chat_agent.*`** (5): `chat_agent.ai_disclosure_changed` · `chat_agent.created` · `chat_agent.deleted` · `chat_agent.rules_imported` · `chat_agent.updated`
 - **`client_portal.*`** (2): `client_portal.config_updated` · `client_portal.self_service_submitted`
 - **`cockpit_item.*`** (10): `cockpit_item.acknowledged` · `cockpit_item.approved` · `cockpit_item.batch_decided` · `cockpit_item.executed` · `cockpit_item.held` · `cockpit_item.ingested` · `cockpit_item.measured` · `cockpit_item.rejected` · `cockpit_item.submitted` · `cockpit_item.updated`
 - **`code_approval.*`** (3): `code_approval.approved` · `code_approval.rejected` · `code_approval.requested`
@@ -249,7 +249,7 @@ A dated deferral is a decision; an undated one is a default. This one is dated.
 - **`support_grant.*`** (5): `support_grant.accessed` · `support_grant.created` · `support_grant.denied` · `support_grant.requested` · `support_grant.revoked`
 - **`survey.*`** (1): `survey.submitted`
 - **`time_entry.*`** (3): `time_entry.approved` · `time_entry.created` · `time_entry.exported`
-- **`tool_approval.*`** (7): `tool_approval.approved` · `tool_approval.denied` · `tool_approval.dispatch_failed` · `tool_approval.dispatched` · `tool_approval.expired` · `tool_approval.requested` · `tool_approval.self_approval_refused`
+- **`tool_approval.*`** (8): `tool_approval.approved` · `tool_approval.denied` · `tool_approval.dispatch_failed` · `tool_approval.dispatched` · `tool_approval.expired` · `tool_approval.redispatch_requested` · `tool_approval.requested` · `tool_approval.self_approval_refused`
 - **`trial.*`** (4): `trial.created` · `trial.expired` · `trial.nurture_email_sent` · `trial.reminder_sent`
 - **`trigger.*`** (3): `trigger.created` · `trigger.deleted` · `trigger.updated`
 - **`trust.*`** (3): `trust.deescalation_applied` · `trust.escalation_applied` · `trust.escalation_recommended`
