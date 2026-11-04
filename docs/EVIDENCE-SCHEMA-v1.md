@@ -29,7 +29,7 @@ the two drift.
 | `id` | Unique event id |
 | `accountId` | The account whose chain this event belongs to |
 | `actorId` / `actorEmail` | The identity that performed the action |
-| `action` | One of the 622 registered action names (§4) |
+| `action` | One of the 623 registered action names (§4) |
 | `resourceType` / `resourceId` / `resourceName` | What was acted on — one of 163 registered resource types (§5) |
 | `before` / `after` | Resource state before/after, when captured |
 | `metadata` | Action-specific context. One key is RESERVED and server-stamped: `metadata.build` — see below |
@@ -115,7 +115,7 @@ its record.
 
 A dated deferral is a decision; an undated one is a default. This one is dated.
 
-## 4. Action vocabulary (622 actions, grouped by prefix)
+## 4. Action vocabulary (623 actions, grouped by prefix)
 
 - **`account.*`** (35): `account.approval_gate_email_changed` · `account.brand_voice_deleted` · `account.brand_voice_updated` · `account.budget_ceiling_breached` · `account.budget_override_set` · `account.budget_paused` · `account.budget_resumed` · `account.cascade_cleanup` · `account.ceiling_breached` · `account.data_exported` · `account.default_locale_changed` · `account.deleted` · `account.deletion_cancelled` · `account.deletion_confirmed` · `account.deletion_executed` · `account.deletion_requested` · `account.department_brand_voice_deleted` · `account.department_brand_voice_updated` · `account.domain_config_deleted` · `account.domain_config_updated` · `account.managed_agent_ai_disclosure_changed` · `account.mfa_required_disabled` · `account.mfa_required_enabled` · `account.migrated_to_portal` · `account.model_config_changed` · `account.plan_changed` · `account.renamed` · `account.saml_config_deleted` · `account.saml_config_updated` · `account.security_preset_applied` · `account.sharing_settings_updated` · `account.sso_connection_tested` · `account.user_auto_joined` · `account.vertical_changed` · `account.voice_ai_disclosure_changed`
 - **`account_gate.*`** (4): `account_gate.disabled` · `account_gate.fired` · `account_gate.registered` · `account_gate.updated`
@@ -202,6 +202,7 @@ A dated deferral is a decision; an undated one is a default. This one is dated.
 - **`knowledge_source.*`** (5): `knowledge_source.connected` · `knowledge_source.disconnected` · `knowledge_source.health_checked` · `knowledge_source.queried` · `knowledge_source.updated`
 - **`leak_audit.*`** (2): `leak_audit.created` · `leak_audit.delivered`
 - **`learning_report.*`** (1): `learning_report.sent`
+- **`llm.*`** (1): `llm.phi_provider_refused`
 - **`local_content.*`** (7): `local_content.brand_updated` · `local_content.month_started` · `local_content.plan_updated` · `local_content.visual_asset_changed` · `local_content.voice_check_decided` · `local_content.voice_check_sent` · `local_content.voice_check_started`
 - **`location.*`** (2): `location.imported` · `location.site_import_started`
 - **`location_fact.*`** (5): `location_fact.proposal_decided` · `location_fact.proposals_bulk_accepted` · `location_fact.proposed` · `location_fact.recorded` · `location_fact.research_dispatched`
