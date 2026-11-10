@@ -29,7 +29,7 @@ the two drift.
 | `id` | Unique event id |
 | `accountId` | The account whose chain this event belongs to |
 | `actorId` / `actorEmail` | The identity that performed the action |
-| `action` | One of the 625 registered action names (§4) |
+| `action` | One of the 631 registered action names (§4) |
 | `resourceType` / `resourceId` / `resourceName` | What was acted on — one of 163 registered resource types (§5) |
 | `before` / `after` | Resource state before/after, when captured |
 | `metadata` | Action-specific context. One key is RESERVED and server-stamped: `metadata.build` — see below |
@@ -115,7 +115,7 @@ its record.
 
 A dated deferral is a decision; an undated one is a default. This one is dated.
 
-## 4. Action vocabulary (625 actions, grouped by prefix)
+## 4. Action vocabulary (631 actions, grouped by prefix)
 
 - **`account.*`** (35): `account.approval_gate_email_changed` · `account.brand_voice_deleted` · `account.brand_voice_updated` · `account.budget_ceiling_breached` · `account.budget_override_set` · `account.budget_paused` · `account.budget_resumed` · `account.cascade_cleanup` · `account.ceiling_breached` · `account.data_exported` · `account.default_locale_changed` · `account.deleted` · `account.deletion_cancelled` · `account.deletion_confirmed` · `account.deletion_executed` · `account.deletion_requested` · `account.department_brand_voice_deleted` · `account.department_brand_voice_updated` · `account.domain_config_deleted` · `account.domain_config_updated` · `account.managed_agent_ai_disclosure_changed` · `account.mfa_required_disabled` · `account.mfa_required_enabled` · `account.migrated_to_portal` · `account.model_config_changed` · `account.plan_changed` · `account.renamed` · `account.saml_config_deleted` · `account.saml_config_updated` · `account.security_preset_applied` · `account.sharing_settings_updated` · `account.sso_connection_tested` · `account.user_auto_joined` · `account.vertical_changed` · `account.voice_ai_disclosure_changed`
 - **`account_gate.*`** (4): `account_gate.disabled` · `account_gate.fired` · `account_gate.registered` · `account_gate.updated`
@@ -141,7 +141,7 @@ A dated deferral is a decision; an undated one is a default. This one is dated.
 - **`bundle.*`** (4): `bundle.created` · `bundle.deleted` · `bundle.forked` · `bundle.updated`
 - **`byok.*`** (3): `byok.call_refused` · `byok.fallback_policy_changed` · `byok.fallback_to_platform`
 - **`channel_task.*`** (1): `channel_task.created`
-- **`chat_agent.*`** (5): `chat_agent.ai_disclosure_changed` · `chat_agent.created` · `chat_agent.deleted` · `chat_agent.rules_imported` · `chat_agent.updated`
+- **`chat_agent.*`** (6): `chat_agent.ai_disclosure_changed` · `chat_agent.created` · `chat_agent.deleted` · `chat_agent.rules_imported` · `chat_agent.safety_reply` · `chat_agent.updated`
 - **`client_portal.*`** (2): `client_portal.config_updated` · `client_portal.self_service_submitted`
 - **`cockpit_item.*`** (10): `cockpit_item.acknowledged` · `cockpit_item.approved` · `cockpit_item.batch_decided` · `cockpit_item.executed` · `cockpit_item.held` · `cockpit_item.ingested` · `cockpit_item.measured` · `cockpit_item.rejected` · `cockpit_item.submitted` · `cockpit_item.updated`
 - **`code_approval.*`** (3): `code_approval.approved` · `code_approval.rejected` · `code_approval.requested`
@@ -185,7 +185,7 @@ A dated deferral is a decision; an undated one is a default. This one is dated.
 - **`governed_loop.*`** (3): `governed_loop.event_recorded` · `governed_loop.gate_decided` · `governed_loop.receipt_recorded`
 - **`governed_memory.*`** (4): `governed_memory.expired` · `governed_memory.promoted` · `governed_memory.recalled` · `governed_memory.sealed`
 - **`group.*`** (5): `group.created` · `group.deleted` · `group.member_added` · `group.member_removed` · `group.updated`
-- **`gtm.*`** (51): `gtm.artifact_registered` · `gtm.autopilot_config_set` · `gtm.ci_config_updated` · `gtm.ci_dispatch_forced` · `gtm.ci_rec_dispatched` · `gtm.ci_rec_ruled` · `gtm.ci_recs_updated` · `gtm.demo_video_requested` · `gtm.digest_archived` · `gtm.dispatch_seat_default_set` · `gtm.essay_pipeline_updated` · `gtm.feed_run_blocked` · `gtm.feed_run_dispatched` · `gtm.feed_run_dispatched` · `gtm.feed_trigger_config_set` · `gtm.hook_corrected` · `gtm.hook_dispatched` · `gtm.hooks_queued` · `gtm.operating_fact_added` · `gtm.operating_fact_removed` · `gtm.operating_facts_refreshed` · `gtm.reddit_research_dispatched` · `gtm.reply_sweep_dispatched` · `gtm.run_promoted` · `gtm.run_reverted` · `gtm.run_started` · `gtm.schedule_changed` · `gtm.skill_dispatched` · `gtm.slot_set` · `gtm.theme_config_updated` · `gtm.theme_request_created` · `gtm.theme_request_decided` · `gtm.vocab_request_created` · `gtm.vocab_request_decided` · `gtm.x_api_budget_refused` · `gtm.x_api_connected` · `gtm.x_api_disconnected` · `gtm.x_api_token_refresh_failed` · `gtm.x_inbound_changed` · `gtm.x_lane_config_set` · `gtm.x_publish_attempted` · `gtm.x_publish_failed` · `gtm.x_publish_refused` · `gtm.x_publish_resolved` · `gtm.x_publish_succeeded` · `gtm.x_publish_unknown` · `gtm.x_queue_approval_changed` · `gtm.x_queue_item_changed` · `gtm.x_reply_target_changed` · `gtm.x_roster_changed` · `gtm.yt_pipeline_updated`
+- **`gtm.*`** (55): `gtm.artifact_registered` · `gtm.autopilot_config_set` · `gtm.ci_config_updated` · `gtm.ci_dispatch_forced` · `gtm.ci_rec_dispatched` · `gtm.ci_rec_ruled` · `gtm.ci_recs_updated` · `gtm.demo_video_requested` · `gtm.digest_archived` · `gtm.dispatch_seat_default_set` · `gtm.essay_pipeline_updated` · `gtm.feed_run_blocked` · `gtm.feed_run_dispatched` · `gtm.feed_run_dispatched` · `gtm.feed_trigger_config_set` · `gtm.hook_corrected` · `gtm.hook_dispatched` · `gtm.hooks_queued` · `gtm.li_unattended_changed` · `gtm.li_unattended_claim` · `gtm.li_unattended_hold` · `gtm.operating_fact_added` · `gtm.operating_fact_removed` · `gtm.operating_facts_refreshed` · `gtm.reddit_research_dispatched` · `gtm.reply_sweep_dispatched` · `gtm.run_promoted` · `gtm.run_reverted` · `gtm.run_started` · `gtm.schedule_changed` · `gtm.skill_dispatched` · `gtm.slot_set` · `gtm.theme_config_updated` · `gtm.theme_request_created` · `gtm.theme_request_decided` · `gtm.vocab_request_created` · `gtm.vocab_request_decided` · `gtm.x_api_budget_refused` · `gtm.x_api_connected` · `gtm.x_api_disconnected` · `gtm.x_api_spend_reconciled` · `gtm.x_api_token_refresh_failed` · `gtm.x_inbound_changed` · `gtm.x_lane_config_set` · `gtm.x_publish_attempted` · `gtm.x_publish_failed` · `gtm.x_publish_refused` · `gtm.x_publish_resolved` · `gtm.x_publish_succeeded` · `gtm.x_publish_unknown` · `gtm.x_queue_approval_changed` · `gtm.x_queue_item_changed` · `gtm.x_reply_target_changed` · `gtm.x_roster_changed` · `gtm.yt_pipeline_updated`
 - **`hipaa.*`** (2): `hipaa.baa_signed` · `hipaa.breach_detected`
 - **`home_services.*`** (8): `home_services.kb_articles_seeded` · `home_services.kb_csv_imported` · `home_services.kb_jobber_imported` · `home_services.onboarding_completed` · `home_services.onboarding_step_completed` · `home_services.shadow_interaction_reviewed` · `home_services.sla_escalation_rules_updated` · `home_services.sla_tiers_updated`
 - **`hook.*`** (5): `hook.created` · `hook.deleted` · `hook.execution_blocked` · `hook.fired` · `hook.updated`
@@ -214,7 +214,7 @@ A dated deferral is a decision; an undated one is a default. This one is dated.
 - **`mcp_bundle.*`** (4): `mcp_bundle.created` · `mcp_bundle.deleted` · `mcp_bundle.installed` · `mcp_bundle.updated`
 - **`mcp_tunnel.*`** (4): `mcp_tunnel.created` · `mcp_tunnel.decision` · `mcp_tunnel.deleted` · `mcp_tunnel.updated`
 - **`memory.*`** (1): `memory.consulted`
-- **`messaging.*`** (4): `messaging.reply_sent` · `messaging.template_created` · `messaging.template_deleted` · `messaging.template_updated`
+- **`messaging.*`** (5): `messaging.reply_send_unknown` · `messaging.reply_sent` · `messaging.template_created` · `messaging.template_deleted` · `messaging.template_updated`
 - **`model_certification.*`** (7): `model_certification.baselined` · `model_certification.grace_expired` · `model_certification.recert_failed` · `model_certification.recert_refused` · `model_certification.recertified` · `model_certification.restored` · `model_certification.swap_detected`
 - **`model_policy.*`** (1): `model_policy.refused`
 - **`msp.*`** (13): `msp.action_executed` · `msp.action_proposed` · `msp.action_rejected` · `msp.auto_trigger_changed` · `msp.autonomy_changed` · `msp.autonomy_demoted` · `msp.autonomy_gated` · `msp.autonomy_graduated` · `msp.autonomy_reassessed` · `msp.kb_articles_seeded` · `msp.onboarding_completed` · `msp.onboarding_step_completed` · `msp.shadow_interaction_reviewed`
